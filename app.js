@@ -1,13 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const date = require(__dirname + '/date.js');
+const _ = require('lodash');
+
+const db = require('./database/db');
+const ListService = require('./database/list');
+const ItemService = require('./database/item');
+const errorHandler = require('./errorHandle');
 
 const app = express();
 const port = 3000;
-
-const fs = require('fs');
-const path = require('path');
-const logFilePath = path.join(__dirname, 'errors.log');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
@@ -17,53 +18,70 @@ app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
-const items = ['Buy Food'];
-const workItems = [];
-
-app.get('/', (req, res, next) => {
+(async () => {
   try {
-    const day = date.getDate();
-    res.render('list', { listTitle: day, newListItems: items });
+    await db.connect();
   } catch (error) {
-    const errorMessage = `Failed to get date: ${error.message}`;
-    next(new Error(errorMessage));
+    console.error(`Failed to connect to the database`, err);
+  }
+})();
+
+app.get('/', async (req, res, next) => {
+  try {
+    await ItemService.renderDefaultList(res);
+  } catch (error) {
+    console.error(`Failed to render collection`, err);
   }
 });
 
-app.post('/', (req, res) => {
-  const item = req.body.newItem;
-  console.log(req.body.list);
-  if (req.body.list === 'Work List') {
-    workItems.push(item);
-    res.redirect('/work');
-  } else {
-    items.push(item);
-    res.redirect('/');
+//Express Route Parameters
+app.get('/:customListName', async (req, res) => {
+  try {
+    const customListName = _.capitalize(req.params.customListName);
+    await ListService.renderCustomList(res, customListName);
+  } catch (err) {
+    console.error(`Failed to render custom list`, err);
   }
 });
 
-app.get('/work', (req, res) => {
-  res.render('list', { listTitle: 'Work List', newListItems: workItems });
+app.post('/', async (req, res) => {
+  try {
+    const itemName = req.body.newItem;
+    const listTitle = req.body.list;
+
+    const item = new ItemService.Item({
+      name: itemName,
+    });
+
+    if (listTitle === 'Today') {
+      await ItemService.addItemToDefaultList(item);
+      res.redirect('/');
+    } else {
+      await ListService.addItemToCustomList(item, listTitle);
+      res.redirect('/' + listTitle);
+    }
+  } catch (error) {
+    console.error('Failed to add item', error);
+  }
 });
 
-app.post('/work', (req, res) => {
-  let item = req.body.newItem;
-  workItems.push(item);
-  res.redirect('/work');
+app.post('/delete', async (req, res) => {
+  try {
+    const checkedItemId = req.body.checkbox;
+    const listName = req.body.listName;
+
+    if (listName === 'Today') {
+      await ItemService.deleteItemByIdFromDefaultList(checkedItemId);
+      res.redirect('/');
+    } else {
+      await ListService.deleteItemByIdFromCustomList(listName, checkedItemId);
+      res.redirect('/' + listName);
+    }
+  } catch (error) {
+    console.error(`Failed to delete item by id`, error);
+  }
 });
 
 app.use((err, req, res, next) => {
-  // логируем ошибку в файл errors.log
-  fs.appendFile(
-    logFilePath,
-    `${new Date().toISOString()} - ${err.stack}\n`,
-    (err) => {
-      if (err) console.error(err);
-    }
-  );
-  res
-    .status(500)
-    .send(
-      'Internal Server Error: Something went wrong. Please try again later.'
-    );
+  errorHandler(err, req, res, next);
 });
