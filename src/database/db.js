@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const mongoose = require('mongoose');
 const DB_NAME = 'todoListDB';
+require('dotenv').config();
 
 class Database {
   constructor() {
