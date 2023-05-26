@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const mongoose = require('mongoose');
 const DB_NAME = 'todoListDB';
 
@@ -8,7 +10,7 @@ class Database {
 
   connect() {
     return new Promise((resolve, reject) => {
-      mongoose.connect(`mongodb://127.0.0.1:27017/${DB_NAME}`, {
+      mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`, {
         useNewUrlParser: true,
       });
 

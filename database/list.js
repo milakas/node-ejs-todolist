@@ -19,7 +19,7 @@ class ListService {
   }
 
   async createCustomList(customListName) {
-    if (customListName !== 'favicon.ico') {
+    if (customListName !== 'favicon.ico' && customListName !== 'Favicon.ico') {
       const list = new this.List({
         name: customListName,
         items: ItemService.initializeDefaultItems(),
