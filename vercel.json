@@ -7,7 +7,7 @@
     }
   ],
   "routes": [
-    { "src": "/css/(.*)", "dest": "/public/css/$1" },
+    { "src": "/public/css/(.*)", "dest": "/public/css/$1" },
     { "src": "/(.+\\.html)", "dest": "/public/$1" },
     { "src": "/(.+\\.ejs)", "dest": "/src/views/$1" },
     { "src": "/(.*)", "dest": "/src/app.js" }
