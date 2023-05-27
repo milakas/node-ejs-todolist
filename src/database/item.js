@@ -24,7 +24,7 @@ class ItemService {
     });
 
     const item3 = new this.Item({
-      name: '<---- Hit this to delete an item.',
+      name: 'Hit this to delete an item --->',
     });
 
     defaultItems.push(item1, item2, item3);
@@ -47,7 +47,7 @@ class ItemService {
         await this.addDefaultItems();
         res.redirect('/');
       } else {
-        res.render('list', { listTitle: 'Today', newListItems: items });
+        res.render('list', { listTitle: 'todos', newListItems: items });
       }
     } catch (error) {
       console.error(`Failed to get data: ${error.message}`);

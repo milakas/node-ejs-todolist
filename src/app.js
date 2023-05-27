@@ -60,7 +60,7 @@ app.post('/', async (req, res) => {
       name: itemName,
     });
 
-    if (listTitle === 'Today') {
+    if (listTitle === 'todos') {
       await ItemService.addItemToDefaultList(item);
       res.redirect('/');
     } else {
@@ -77,7 +77,7 @@ app.post('/delete', async (req, res) => {
     const checkedItemId = req.body.checkbox;
     const listName = req.body.listName;
 
-    if (listName === 'Today') {
+    if (listName === 'todos') {
       await ItemService.deleteItemByIdFromDefaultList(checkedItemId);
       res.redirect('/');
     } else {
