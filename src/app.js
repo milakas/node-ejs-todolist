@@ -24,7 +24,7 @@ app.listen(port, () => {
 (async () => {
   try {
     await db.connect();
-  } catch (error) {
+  } catch (err) {
     console.error(`Failed to connect to the database`, err);
   }
 })();
@@ -36,7 +36,7 @@ app.get('/favicon.ico', (req, res) => {
 app.get('/', async (req, res, next) => {
   try {
     await ItemService.renderDefaultList(res);
-  } catch (error) {
+  } catch (err) {
     console.error(`Failed to render collection`, err);
   }
 });
@@ -46,8 +46,8 @@ app.get('/:customListName', async (req, res) => {
   try {
     const customListName = _.capitalize(req.params.customListName);
     await ListService.renderCustomList(res, customListName);
-  } catch (err) {
-    console.error(`Failed to render custom list`, err);
+  } catch (error) {
+    console.error(`Failed to render custom list`, error);
   }
 });
 
@@ -60,7 +60,7 @@ app.post('/', async (req, res) => {
       name: itemName,
     });
 
-    if (listTitle === 'Today') {
+    if (listTitle === 'todos') {
       await ItemService.addItemToDefaultList(item);
       res.redirect('/');
     } else {
@@ -77,7 +77,7 @@ app.post('/delete', async (req, res) => {
     const checkedItemId = req.body.checkbox;
     const listName = req.body.listName;
 
-    if (listName === 'Today') {
+    if (listName === 'todos') {
       await ItemService.deleteItemByIdFromDefaultList(checkedItemId);
       res.redirect('/');
     } else {
