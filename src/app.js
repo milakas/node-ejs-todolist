@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const _ = require('lodash');
-const fs = require('fs');
 const path = require('path');
 
 const db = require('./database/db');
@@ -13,11 +12,10 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, '..', 'public')));
 
-app.engine('ejs', require('ejs').renderFile);
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, '/views'));
+app.set('views', path.join(__dirname, 'views'));
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
@@ -30,6 +28,10 @@ app.listen(port, () => {
     console.error(`Failed to connect to the database`, err);
   }
 })();
+
+app.get('/favicon.ico', (req, res) => {
+  res.sendStatus(204);
+});
 
 app.get('/', async (req, res, next) => {
   try {
