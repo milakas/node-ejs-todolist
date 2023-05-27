@@ -29,16 +29,16 @@ body {
   }
 }
 
+.wrap {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
 .box {
   width: 450px;
   border-radius: 10px;
 
   @media screen and (max-width: 600px) {
     max-width: 80vw;
-  }
-
-  &:last-child {
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   }
 
   &__title {
@@ -85,6 +85,46 @@ form {
       font-size: 1.2rem;
     }
 
+    &::-webkit-input-placeholder {
+      color: #d5d5d5;
+      -webkit-transition: font-size 0.3s ease-in-out;
+      transition: font-size 0.3s ease-in-out;
+
+      @media screen and (max-width: 500px) {
+        font-size: 1.1rem;
+      }
+    }
+
+    &::-moz-placeholder {
+      color: #d5d5d5;
+      -moz-transition: font-size 0.3s ease-in-out;
+      transition: font-size 0.3s ease-in-out;
+
+      @media screen and (max-width: 500px) {
+        font-size: 1.1rem;
+      }
+    }
+
+    &:-ms-input-placeholder {
+      color: #d5d5d5;
+      -ms-transition: font-size 0.3s ease-in-out;
+      transition: font-size 0.3s ease-in-out;
+
+      @media screen and (max-width: 500px) {
+        font-size: 1.1rem;
+      }
+    }
+
+    &::-ms-input-placeholder {
+      color: #d5d5d5;
+      -ms-transition: font-size 0.3s ease-in-out;
+      transition: font-size 0.3s ease-in-out;
+
+      @media screen and (max-width: 500px) {
+        font-size: 1.1rem;
+      }
+    }
+
     &::placeholder {
       color: #d5d5d5;
       transition: font-size 0.3s ease-in-out;
@@ -124,11 +164,6 @@ form {
   border-top: 1px solid #e5e5e5;
   background-color: #fff;
 
-  &:last-child {
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-  }
-
   @media screen and (max-width: 500px) {
     padding: 0.8rem 1.8rem;
   }
@@ -164,6 +199,9 @@ form {
     justify-content: space-between;
     cursor: pointer;
     font-size: 20px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     user-select: none;
 
     @media screen and (max-width: 500px) {
@@ -209,6 +247,8 @@ form {
 
 .info {
   padding: 1rem 2rem;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
 
   @media screen and (max-width: 500px) {
     padding: 0.8rem 1.8rem;

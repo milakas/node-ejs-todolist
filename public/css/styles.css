@@ -25,6 +25,10 @@ body {
   }
 }
 
+.wrap {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
 .box {
   width: 450px;
   border-radius: 10px;
@@ -33,9 +37,6 @@ body {
   .box {
     max-width: 80vw;
   }
-}
-.box:last-child {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 .box__title {
   color: #dbc7ee;
@@ -80,6 +81,46 @@ form {
     font-size: 1.2rem;
   }
 }
+.create__input::-webkit-input-placeholder {
+  color: #d5d5d5;
+  -webkit-transition: font-size 0.3s ease-in-out;
+  transition: font-size 0.3s ease-in-out;
+}
+@media screen and (max-width: 500px) {
+  .create__input::-webkit-input-placeholder {
+    font-size: 1.1rem;
+  }
+}
+.create__input::-moz-placeholder {
+  color: #d5d5d5;
+  -moz-transition: font-size 0.3s ease-in-out;
+  transition: font-size 0.3s ease-in-out;
+}
+@media screen and (max-width: 500px) {
+  .create__input::-moz-placeholder {
+    font-size: 1.1rem;
+  }
+}
+.create__input:-ms-input-placeholder {
+  color: #d5d5d5;
+  -ms-transition: font-size 0.3s ease-in-out;
+  transition: font-size 0.3s ease-in-out;
+}
+@media screen and (max-width: 500px) {
+  .create__input:-ms-input-placeholder {
+    font-size: 1.1rem;
+  }
+}
+.create__input::-ms-input-placeholder {
+  color: #d5d5d5;
+  -ms-transition: font-size 0.3s ease-in-out;
+  transition: font-size 0.3s ease-in-out;
+}
+@media screen and (max-width: 500px) {
+  .create__input::-ms-input-placeholder {
+    font-size: 1.1rem;
+  }
+}
 .create__input::-moz-placeholder {
   color: #d5d5d5;
   -moz-transition: font-size 0.3s ease-in-out;
@@ -122,10 +163,6 @@ form {
   border-top: 1px solid #e5e5e5;
   background-color: #fff;
 }
-.delete:last-child {
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-}
 @media screen and (max-width: 500px) {
   .delete {
     padding: 0.8rem 1.8rem;
@@ -159,8 +196,8 @@ form {
   cursor: pointer;
   font-size: 20px;
   -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  user-select: none;
 }
 @media screen and (max-width: 500px) {
   .delete__label {
@@ -202,6 +239,8 @@ form {
 
 .info {
   padding: 1rem 2rem;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 @media screen and (max-width: 500px) {
   .info {
