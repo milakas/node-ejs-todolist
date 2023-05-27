@@ -16,6 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
@@ -28,6 +29,10 @@ app.listen(port, () => {
     console.error(`Failed to connect to the database`, err);
   }
 })();
+
+app.get('/favicon.ico', (req, res) => {
+  res.sendStatus(204);
+});
 
 app.get('/', async (req, res, next) => {
   try {
