@@ -1,11 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const _ = require('lodash');
-const fs = require('fs');
-const path = require('path');
 
 const db = require('./database/db');
-const ListService = require('./database/list');
+const ListService = require('./database/db');
 const ItemService = require('./database/item');
 const errorHandler = require('./errorHandle');
 
@@ -13,10 +11,9 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.resolve(__dirname, '..', 'public')));
+app.use(express.static('public'));
 
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
